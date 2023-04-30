@@ -35,7 +35,11 @@ app.get('/strings/first-characters/:string', (req, res) => {
 app.get('/numbers/add/:num1/and/:num2', (req, res) => {
   const num1 = parseInt(req.params.num1, 10);
   const num2 = parseInt(req.params.num2, 10);
-  res.json({ result: add(num1, num2) });
+  if (Number.isNaN(num1) || Number.isNaN(num2)) {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
+  } else {
+    res.json({ result: add(num1, num2) });
+  }
 });
 
 module.exports = app;
