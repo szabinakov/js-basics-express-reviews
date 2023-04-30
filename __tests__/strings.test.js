@@ -47,12 +47,22 @@ describe('/strings', () => {
   });
 
   describe('GET /lower/{string}', () => {
-    xit('returns the lowercased string', done => {
+    it('returns the lowercased string', done => {
       request(app)
         .get('/strings/lower/HELLO')
         .then(res => {
           expect(res.status).toEqual(200);
           expect(res.body).toEqual({ result: 'hello' });
+          done();
+        });
+    });
+
+    it('returns the lowercased string', done => {
+      request(app)
+        .get('/strings/lower/BYE')
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 'bye' });
           done();
         });
     });
