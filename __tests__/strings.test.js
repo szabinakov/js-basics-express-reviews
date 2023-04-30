@@ -25,12 +25,22 @@ describe('/strings', () => {
   });
 
   describe('GET /upper/{string}', () => {
-    xit('returns the uppercased string', done => {
+    it('returns the uppercased string', done => {
       request(app)
         .get('/strings/upper/hello')
         .then(res => {
           expect(res.status).toEqual(200);
           expect(res.body).toEqual({ result: 'HELLO' });
+          done();
+        });
+    });
+
+    it('returns the uppercased string', done => {
+      request(app)
+        .get('/strings/upper/bye')
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 'BYE' });
           done();
         });
     });
