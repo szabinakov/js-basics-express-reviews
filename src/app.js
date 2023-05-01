@@ -25,11 +25,13 @@ const {
 const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
 
 app.get('/strings/hello/:string', (req, res) => {
-  res.json({ result: sayHello(req.params.string) });
+  const { string } = req.params;
+  res.json({ result: sayHello(string) });
 });
 
 app.get('/strings/upper/:string', (req, res) => {
-  res.json({ result: uppercase(req.params.string) });
+  const { string } = req.params;
+  res.json({ result: uppercase(string) });
 });
 
 app.get('/strings/lower/:string', (req, res) => {
