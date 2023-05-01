@@ -16,35 +16,34 @@ const divide = (a, b) => {
 
 const power = (a, b) => {
   return Math.pow(a, b);
-}
+};
 
-const round = (a) => {
+const round = a => {
   return Math.round(a);
-}
+};
 
-const roundUp = (a) => {
+const roundUp = a => {
   return Math.ceil(a);
-}
+};
 
-const roundDown = (a) => {
+const roundDown = a => {
   return Math.floor(a);
-}
+};
 
-const absolute = (a) => {
+const absolute = a => {
   return Math.abs(a);
-}
+};
 
 const quotient = (a, b) => {
-  if (a < 0 && b > 0){
+  if (a < 0 && b > 0) {
     return Math.ceil(a / b);
-  } else {
-    return Math.floor(a / b);
   }
-}
+  return Math.floor(a / b);
+};
 
 const remainder = (a, b) => {
   return a % b;
-}
+};
 
 module.exports = {
   add,
@@ -57,5 +56,5 @@ module.exports = {
   roundDown,
   absolute,
   quotient,
-  remainder
-}
+  remainder,
+};
