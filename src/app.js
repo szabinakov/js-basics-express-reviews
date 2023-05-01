@@ -14,6 +14,14 @@ const {
 
 const { add, multiply, subtract, divide, remainder } = require('./lib/numbers');
 
+const {
+  getNthElement,
+  arrayToCSVString,
+  addToArray,
+  elementsStartingWithAVowel,
+  removeNthElement2,
+} = require('./lib/arrays');
+
 app.get('/strings/hello/:string', (req, res) => {
   res.json({ result: sayHello(req.params.string) });
 });
@@ -89,5 +97,38 @@ app.post('/numbers/remainder', (req, res) => {
   } else {
     res.status(200).json({ result: remainder(a, b) });
   }
+});
+
+app.post('/arrays/element-at-index/:index', (req, res) => {
+  const { array } = req.body;
+  const { index } = req.params;
+  res.json({ result: getNthElement(index, array) });
+});
+
+app.post('/arrays/to-string', (req, res) => {
+  const { array } = req.body;
+  res.json({ result: arrayToCSVString(array) });
+});
+
+app.post('/arrays/append/', (req, res) => {
+  const { array, value } = req.body;
+  res.json({ result: addToArray(value, array) });
+});
+
+app.post('/arrays/starts-with-vowel', (req, res) => {
+  const { array } = req.body;
+  res.json({ result: elementsStartingWithAVowel(array) });
+});
+
+app.post('/arrays/remove-element', (req, res) => {
+  const { array } = req.body;
+  const { index } = req.query;
+  res.json({ result: removeNthElement2(index, array) });
+});
+
+app.post('/arrays/remove-element', (req, res) => {
+  const { array } = req.body;
+  const { index } = req.query;
+  res.json({ result: removeNthElement2(index, array) });
 });
 module.exports = app;

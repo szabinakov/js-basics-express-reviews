@@ -14,7 +14,7 @@ const csvStringToArray = string => {
 };
 
 const addToArray = (element, array) => {
-  array.push(element);
+  return [...array, element];
 };
 
 const addToArray2 = (element, array) => {
@@ -22,7 +22,7 @@ const addToArray2 = (element, array) => {
 };
 
 const removeNthElement = (index, array) => {
-  array.splice(index, 1);
+  return array.splice(index, 1);
 };
 
 const numbersToStrings = numbers => {
