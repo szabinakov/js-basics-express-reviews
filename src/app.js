@@ -44,7 +44,7 @@ app.get('/strings/first-characters/:string', (req, res) => {
 });
 
 app.get('/numbers/add/:first/and/:second', (req, res) => {
-  if (Number.isNaN(req.params.first) || Number.isNaN(req.params.second)) {
+  if (isNaN(req.params.first) || isNaN(req.params.second)) {
     res.status(400).send({ error: 'Parameters must be valid numbers.' });
   } else {
     res.status(200).send({ result: add(Number(req.params.first), Number(req.params.second)) });
@@ -52,7 +52,7 @@ app.get('/numbers/add/:first/and/:second', (req, res) => {
 });
 
 app.get('/numbers/subtract/:first/from/:second', (req, res) => {
-  if (Number.isNaN(req.params.first) || Number.isNaN(req.params.second)) {
+  if (isNaN(req.params.first) || isNaN(req.params.second)) {
     res.status(400).send({ error: 'Parameters must be valid numbers.' });
   } else {
     res.status(200).send({ result: subtract(Number(req.params.second), Number(req.params.first)) });
@@ -66,10 +66,10 @@ app.post('/numbers/multiply', (req, res) => {
     res.status(400).send({ error: 'Parameters "a" and "b" are required.' });
   }
 
-  if (Number.isNaN(req.body.a) || Number.isNaN(req.body.b)) {
+  if (isNaN(req.body.a) || isNaN(req.body.b)) {
     res.status(400).send({ error: 'Parameters "a" and "b" must be valid numbers.' });
   } else {
-    res.status(200).data({ result: multiply(req.body.a, req.body.b) });
+    res.status(200).send({ result: multiply(req.body.a, req.body.b) });
   }
 });
 
@@ -82,7 +82,7 @@ app.post('/numbers/divide', (req, res) => {
   if (req.body.a == null || req.body.b == null) {
     res.status(400).send({ error: 'Parameters "a" and "b" are required.' });
   }
-  if (Number.isNaN(req.body.a) || Number.isNaN(req.body.b)) {
+  if (isNaN(req.body.a) || isNaN(req.body.b)) {
     res.status(400).send({ error: 'Parameters "a" and "b" must be valid numbers.' });
   } else {
     res.status(200).send({ result: divide(req.body.a, req.body.b) });
@@ -98,7 +98,7 @@ app.post('/numbers/remainder', (req, res) => {
   if (req.body.a == null || req.body.b == null) {
     res.status(400).send({ error: 'Parameters "a" and "b" are required.' });
   }
-  if (Number.isNaN(req.body.a) || Number.isNaN(req.body.b)) {
+  if (isNaN(req.body.a) || isNaN(req.body.b)) {
     res.status(400).send({ error: 'Parameters must be valid numbers.' });
   } else {
     res.status(200).send({ result: remainder(req.body.a, req.body.b) });
