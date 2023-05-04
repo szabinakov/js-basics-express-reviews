@@ -5,6 +5,10 @@ const { add } = require('./lib/numbers');
 const { uppercase } = require('./lib/strings');
 const { lowercase } = require('./lib/strings');
 const { subtract } = require('./lib/numbers');
+const { multiply } = require('./lib/numbers');
+const { divide } = require('./lib/numbers');
+const { remainder } = require('./lib/numbers');
+const { negate } = require('./lib/booleans');
 
 const app = express();
 
@@ -57,36 +61,68 @@ app.get('/numbers/subtract/:num1/from/:num2', (req, res) => {
 });
 
 app.post('/numbers/multiply', (req, res) => {
-  const { a, b } = req.body;
-  const sum = parseInt(a) * parseInt(b);
+  const { a } = req.body;
+  const { b } = req.body;
 
-  res.status(200).json({ result: sum });
-});
-
-app.post('/numbers/divide', (req, res) => {
-  const { a, b } = req.body;
-  const sum = parseInt(a) / parseInt(b);
-
-  res.status(200).json({ result: sum });
-});
-
-app.post('/numbers/divide', (req, res) => {
-  const a = parseInt(req.body.a);
-  const b = parseInt(req.body.b);
-
-  if (b === 0) {
-    return res.status(200).json({ error: 'Unable to divide by 0.' });
+  if (!a || !b) {
+    return res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
   }
 
-  const sum = a / b;
-  res.status(200).json({ sum });
+  if (Number.isNaN(parseInt(a)) || Number.isNaN(parseInt(b))) {
+    return res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  }
+
+  const result = multiply(a, b);
+
+  return res.status(200).json({ result });
+});
+
+app.post('/numbers/divide', (req, res) => {
+  const { a, b } = req.body;
+
+  if (a === undefined || b === undefined) {
+    return res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  }
+
+  const num1 = Number(a);
+  const num2 = Number(b);
+
+  if (Number.isNaN(num1) || Number.isNaN(num2)) {
+    return res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  }
+
+  if (num2 === 0) {
+    return res.status(400).json({ error: 'Unable to divide by 0.' });
+  }
+
+  return res.json({ result: divide(a, b) });
 });
 
 app.post('/numbers/remainder', (req, res) => {
   const { a, b } = req.body;
-  const remainder = parseInt(a) % parseInt(b);
 
-  res.status(200).json({ result: remainder });
+  if (a === undefined || b === undefined) {
+    return res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  }
+
+  const num1 = Number(a);
+  const num2 = Number(b);
+
+  if (Number.isNaN(num1) || Number.isNaN(num2)) {
+    return res.status(400).json({ error: 'Parameters must be valid numbers.' });
+  }
+
+  if (num2 === 0) {
+    return res.status(400).json({ error: 'Unable to divide by 0.' });
+  }
+
+  return res.json({ result: remainder(a, b) });
+});
+
+app.post('/booleans/negate', (req, res) => {
+  const { value } = req.body;
+  const negatedValue = !value;
+  res.json({ result: negate(value) });
 });
 
 app.listen(3000, () => {
