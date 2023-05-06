@@ -1,14 +1,9 @@
 const express = require('express');
 // importing functions from the JS basics folders so we don't have to rewrite them
-const { sayHello } = require('./lib/strings');
-const { add } = require('./lib/numbers');
-const { uppercase } = require('./lib/strings');
-const { lowercase } = require('./lib/strings');
-const { subtract } = require('./lib/numbers');
-const { multiply } = require('./lib/numbers');
-const { divide } = require('./lib/numbers');
-const { remainder } = require('./lib/numbers');
-const { negate } = require('./lib/booleans');
+const { sayHello, uppercase, lowercase } = require('./lib/strings');
+const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
+const { negate, truthiness, startsWith } = require('./lib/booleans');
+const { arrayToCSVString, addToArray2, elementsStartingWithAVowel } = require('./lib/arrays');
 
 const app = express();
 
@@ -121,12 +116,85 @@ app.post('/numbers/remainder', (req, res) => {
 
 app.post('/booleans/negate', (req, res) => {
   const { value } = req.body;
-  const negatedValue = !value;
   res.json({ result: negate(value) });
 });
 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+app.post('/booleans/truthiness', (req, res) => {
+  const { value } = req.body;
+  // eslint-disable-next-line no-constant-condition
+  if (value == null || 0 || ' ') {
+    return res.status(200).json({ result: truthiness(value) });
+  }
+  return res.status(200).json({ result: true });
+});
+
+app.get('/booleans/is-odd/:number', (req, res) => {
+  const { number } = req.params;
+
+  if (number % 2 === 1) {
+    return res.status(200).json({ result: true });
+  }
+
+  if (number % 2 === 0) {
+    return res.status(200).json({ result: false });
+  }
+
+  if (Number.isNaN(Number(number))) {
+    return res.status(400).json({ error: 'Parameter must be a number.' });
+  }
+});
+
+app.get('/booleans/:string/starts-with/:character', (req, res) => {
+  const { character, string } = req.params;
+
+  if (character.length !== 1) {
+    return res.status(400).json({ error: 'Parameter "character" must be a single character.' });
+  }
+
+  return res.status(200).json({ result: startsWith(character, string) });
+});
+
+app.post('/arrays/element-at-index/:index', (req, res) => {
+  const index = Number(req.params.index);
+  const { array } = req.body;
+
+  const element = array[index];
+  res.status(200).json({ result: element });
+});
+
+app.post('/arrays/to-string', (req, res) => {
+  const { array } = req.body;
+
+  return res.status(200).json({ result: arrayToCSVString(array) });
+});
+
+app.post('/arrays/append', (req, res) => {
+  const { value, array } = req.body;
+
+  const newArray = addToArray2(value, array);
+
+  return res.status(200).json({ result: newArray });
+});
+
+app.post('/arrays/starts-with-vowel', (req, res) => {
+  const { array } = req.body;
+
+  return res.status(200).json({ result: elementsStartingWithAVowel(array) });
+});
+
+app.post('/arrays/remove-element', (req, res) => {
+  const { array } = req.body;
+  const { index } = req.query;
+
+  // remove element at given index
+  if (index !== undefined) {
+    array.splice(index, 1);
+  } else {
+    // remove first element if no index is given
+    array.shift();
+  }
+
+  return res.status(200).json({ result: array });
 });
 
 module.exports = app;
