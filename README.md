@@ -1,8 +1,12 @@
 # JavaScript Basics in Express
 
-## Getting started
+This is a series of excercises designed to help gain an understanding of APIs and Express
 
-Ensure your Visual Studio Code application is up to date, and that you have the [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) installed and enabled.
+## A bit more detail
+
+In the repository there is a lib directory which contains files of Javascript code for functions that work on different specified Javascript objects. There are an app.js file and an index.js file which contain the code for the API. Finally, there is a **tests** directory, containing tests to ensure that the code is functioning correctly.
+
+## Getting started
 
 Run the commands below inside your `Projects` folder.
 
@@ -12,27 +16,8 @@ cd your-project-folder-name
 npm install
 ```
 
-## Copy over your JavaScript Basics code
-
-:rotating_light: **Important!**
-
-This exercise makes use of your previous `javascript-basics` code. Copy the files from that project's `src/` folder into a new `lib/` directory in this repository's `src` directory. You should end up with the following file structure in this project:
-
-```
-src
-├── app.js
-└── lib
-    ├── arrays.js
-    ├── booleans.js
-    ├── numbers.js
-    ├── objects.js
-    └── strings.js
-```
-
 ## Running tests
 
 You can run tests with the `npm test` command.
 
-## Remember: READMEs are important!
-
-When you're finished, be sure to rewrite this one so it's more specific to your project.
+You can also run `npm start` to start up your server locally and visit any of the routes in the app.js file in Postman or in your browser
