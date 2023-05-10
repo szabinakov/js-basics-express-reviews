@@ -1,7 +1,10 @@
 const express = require('express');
 const { sayHello, uppercase, lowercase, firstCharacter, firstCharacters } = require('./lib/strings');
 
+
 const app = express();
+
+app.use(express.json());
 
 app.get('/strings/hello/:string', (req, res) => {
   res.status(200).json({ result: sayHello(req.params.string) });
@@ -16,9 +19,9 @@ app.get('/strings/lower/:string', (req, res) => {
 });
 
 app.get('/strings/first-characters/:string', (req, res) => {
-  const stringLength = req.query.length;
-  if (stringLength) {
-    res.status(200).json({ result: firstCharacters(req.params.string), stringLength})
+  const length = req.query.length;
+  if (length) {
+    res.status(200).json({ result: firstCharacters(req.params.string, length)})
  }
  else {
     res.status(200).json({ result: firstCharacter(req.params.string) });
