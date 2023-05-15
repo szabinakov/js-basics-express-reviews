@@ -12,10 +12,19 @@ describe('/strings', () => {
           done();
         });
     });
+    it('returns "Hello,turtle!" when passed "turtle"', done => {
+      request(app)
+        .get('/strings/hello/turtle')
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 'Hello, turtle!' });
+          done();
+        });
+    });
   });
 
   describe('GET /upper/{string}', () => {
-    xit('returns the uppercased string', done => {
+    it('returns the uppercased string', done => {
       request(app)
         .get('/strings/upper/hello')
         .then(res => {
@@ -27,7 +36,7 @@ describe('/strings', () => {
   });
 
   describe('GET /lower/{string}', () => {
-    xit('returns the lowercased string', done => {
+    it('returns the lowercased string', done => {
       request(app)
         .get('/strings/lower/HELLO')
         .then(res => {
@@ -38,10 +47,22 @@ describe('/strings', () => {
     });
   });
 
-  describe('GET /first-characters/{string}', () => {
-    xit('returns the first character of the string when there is no query string', done => {
+  describe('GET /count-characters/{string}', () => {
+    it('returns the lowercased string', done => {
       request(app)
-        .get('/strings/first-characters/hello')
+        .get('/strings/count-characters/hello')
+        .then(res => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({ result: 5 });
+          done();
+        });
+    });
+  });
+
+  describe('GET /first-character/{string}', () => {
+    it('returns the first character of the string when there is no query string', done => {
+      request(app)
+        .get('/strings/first-character/hello')
         .then(res => {
           expect(res.status).toEqual(200);
           expect(res.body).toEqual({ result: 'h' });
@@ -49,7 +70,7 @@ describe('/strings', () => {
         });
     });
 
-    xit('returns the first n character of the string when passed a query parameter', done => {
+    it('returns the first n characters of the string when passed a query parameter', done => {
       request(app)
         .get('/strings/first-characters/sd32fg45')
         .query({ length: 4 })
